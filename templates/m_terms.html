@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms & Conditions - CgMovies</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1f2937;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4b5563;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6b7280;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: #1f2937;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+      right: 0;
+      top: 100%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .dropdown-menu a {
+      color: #e5e7eb;
+      padding: 12px 16px;
+      display: block;
+    }
+    .dropdown-menu a:hover {
+      background-color: #374151;
+      color: #6366f1;
+    }
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 flex flex-col min-h-screen">
+
+  <!-- ✅ Header -->
+  {% include 'um_topbar.html' %}
+
+  <!-- ✅ Terms & Conditions -->
+  <main class="flex-grow py-16 md:py-20">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">Terms & Conditions</h1>
+
+      <div class="bg-gray-800 rounded-xl shadow-lg p-8 max-w-4xl mx-auto">
+        <div class="prose prose-invert max-w-none">
+          <p class="text-lg leading-relaxed mb-6">
+            Welcome to <span class="font-semibold text-indigo-400">CgMovies</span>. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. If you do not agree, please do not use this site.
+          </p>
+
+          <h2>1. Acceptance of Terms</h2>
+          <p>
+            These Terms & Conditions ("Agreement") are between you and CgMovies and govern your use of the site and services. By accessing the website, you agree to be bound by these terms.
+          </p>
+
+          <h2>2. Digital Nature & No Refund Policy</h2>
+          <p>
+            All purchases made on CgMovies are for digital services and content. Due to the nature of digital goods, **we do not offer refunds or exchanges once the content is delivered**, accessed, or downloaded.
+          </p>
+          <p>
+            By making a purchase, you acknowledge that you waive any right to claim a refund under consumer protection laws regarding non-physical goods.
+          </p>
+
+          <h2>3. Privacy Policy</h2>
+          <p>
+            Your use of CgMovies is also subject to our Privacy Policy, which governs how we collect, use, and protect your data.
+          </p>
+
+          <h2>4. User Conduct</h2>
+          <p>
+            You agree to use CgMovies only for lawful purposes. Any abusive, defamatory, obscene, or illegal activity is strictly prohibited.
+          </p>
+
+          <h2>5. Intellectual Property</h2>
+          <p>
+            All content on CgMovies — including text, graphics, logos, videos, and code — is the property of CgMovies or its licensors and is protected under copyright laws.
+          </p>
+
+          <h2>6. Limitations of Liability</h2>
+          <p>
+            CgMovies shall not be liable for any indirect or consequential damages resulting from the use or inability to use our service.
+          </p>
+
+          <h2>7. Changes to Terms</h2>
+          <p>
+            We reserve the right to modify these Terms & Conditions at any time. Continued use of the platform means acceptance of the changes.
+          </p>
+
+          <h2>8. Governing Law</h2>
+          <p>
+            These terms shall be governed by and construed in accordance with the laws of your jurisdiction.
+          </p>
+
+          <h2>9. Contact Us</h2>
+          <p>
+            For any questions, email us at <a href="mailto:cgmovieshub@gmail.com" class="text-indigo-400 hover:underline">cgmovieshub@gmail.com</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+    {% include 'um_footer.html' %}
+
+  <script>
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+    [x-cloak] { display: none !important; }
+    .modal-bg {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+  {% include 'seller_topbar.html' %}
+
+  <main class="flex-grow py-10">
+    <div x-data="orderApp()" class="container mx-auto px-4">
+      <h1 class="text-3xl font-bold text-center mb-8">Manage Orders</h1>
+
+      <!-- Status Filter Only -->
+      <form method="GET" action="{{ url_for('seller_orders') }}" class="flex gap-4 mb-6">
+        <select name="status" onchange="this.form.submit()" class="p-2 border rounded w-full md:w-1/3">
+          <option value="">Filter by Status</option>
+          <option value="pending" {% if selected_status == 'pending' %}selected{% endif %}>Pending</option>
+          <option value="accepted" {% if selected_status == 'accepted' %}selected{% endif %}>Accepted</option>
+          <option value="delivered" {% if selected_status == 'delivered' %}selected{% endif %}>Delivered</option>
+          <option value="cancelled" {% if selected_status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+        </select>
+
+        {% if selected_status %}
+        <div class="self-center">
+          <a href="{{ url_for('seller_orders') }}" class="text-indigo-600 hover:underline">Clear Filter</a>
+        </div>
+        {% endif %}
+      </form>
+
+      <!-- Orders Table -->
+      <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full">
+          <thead class="bg-gray-100 text-gray-600 uppercase text-sm">
+            <tr>
+              <th class="py-3 px-6 text-left">Order ID</th>
+              <th class="py-3 px-6 text-left">Product ID</th>
+              <th class="py-3 px-6 text-left">Item Name</th>
+              <th class="py-3 px-6 text-left">Qty</th>
+              <th class="py-3 px-6 text-left">Total</th>
+              <th class="py-3 px-6 text-left">Status</th>
+              <th class="py-3 px-6 text-left">Order Date</th>
+              <th class="py-3 px-6 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm text-gray-700">
+            {% for order in orders %}
+            <tr class="border-b hover:bg-gray-50">
+              <td class="py-3 px-6">#{{ order.id }}</td>
+              <td class="py-3 px-6">{{ order.item_id }}</td>
+              <td class="py-3 px-6">{{ order.item_name }}</td>
+              <td class="py-3 px-6">{{ order.quantity }}</td>
+              <td class="py-3 px-6">₹{{ order.amount }}</td>
+              <td class="py-3 px-6">
+                <span class="py-1 px-3 rounded-full text-xs
+                  {% if order.status == 'pending' %}bg-yellow-200 text-yellow-800
+                  {% elif order.status == 'accepted' %}bg-blue-200 text-blue-800
+                  {% elif order.status == 'delivered' %}bg-green-200 text-green-800
+                  {% elif order.status == 'cancelled' %}bg-red-200 text-red-800
+                  {% endif %}">{{ order.status.capitalize() }}</span>
+              </td>
+              <td class="py-3 px-6">{{ order.order_date }}</td>
+              <td class="py-3 px-6 text-center">
+  <div class="flex justify-center gap-2">
+    <!-- View -->
+    <button @click='openView({{ order | tojson | safe }})' type="button" title="View">
+      <svg class="w-5 h-5 text-gray-700 hover:text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7s-8.268-2.943-9.542-7z"/>
+      </svg>
+    </button>
+
+    <!-- Edit -->
+    <button @click='openEdit({{ order | tojson | safe }})' type="button" title="Edit">
+      <svg class="w-5 h-5 text-green-600 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+      </svg>
+    </button>
+
+    <!-- Delete -->
+    <form method="POST" action="{{ url_for('delete_order', order_id=order.id) }}" onsubmit="return confirm('Delete this order?')">
+      <button type="submit" title="Delete">
+        <svg class="w-5 h-5 text-red-600 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M4 7h16"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-center py-4 text-gray-500">No orders found.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- View Modal -->
+      <div x-show="showViewModal" x-transition x-cloak class="fixed inset-0 flex items-center justify-center modal-bg z-50">
+        <div class="bg-white p-6 rounded shadow max-w-md w-full">
+          <h2 class="text-lg font-semibold mb-4">Customer Details</h2>
+          <p><strong>Name:</strong> <span x-text="modalOrder.user_name"></span></p>
+          <p><strong>Email:</strong> <span x-text="modalOrder.user_email"></span></p>
+          <p><strong>Contact:</strong> <span x-text="modalOrder.user_contact"></span></p>
+          <p><strong>Address:</strong>
+            <span x-text="modalOrder.address1 + ', ' + modalOrder.city + ', ' + modalOrder.pincode"></span>
+          </p>
+          <div class="text-right mt-6">
+            <button @click="showViewModal = false" class="px-4 py-2 bg-indigo-600 text-white rounded">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Modal -->
+      <div x-show="showEditModal" x-transition x-cloak class="fixed inset-0 flex items-center justify-center modal-bg z-50">
+        <div class="bg-white p-6 rounded shadow max-w-sm w-full">
+          <h2 class="text-lg font-semibold mb-4">Update Order</h2>
+          <form :action="modalOrder.edit_url" method="POST" class="space-y-4">
+            <template x-if="modalOrder.status === 'pending'">
+              <div class="space-x-4">
+                <button name="action" value="accept" class="bg-green-600 text-white px-4 py-2 rounded">Accept</button>
+                <button name="action" value="cancel" class="bg-red-600 text-white px-4 py-2 rounded">Cancel</button>
+              </div>
+            </template>
+            <template x-if="modalOrder.status === 'accepted'">
+              <button name="action" value="deliver" class="bg-blue-600 text-white px-4 py-2 rounded">Mark as Delivered</button>
+            </template>
+            <template x-if="modalOrder.status === 'cancelled' || modalOrder.status === 'delivered'">
+              <p class="text-gray-600">This order cannot be modified.</p>
+            </template>
+            <div class="text-right">
+              <button type="button" @click="showEditModal = false" class="mt-4 px-4 py-2 bg-gray-300 text-gray-700 rounded">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Alpine JS Component -->
+  <script>
+    function orderApp() {
+      return {
+        showViewModal: false,
+        showEditModal: false,
+        modalOrder: {},
+
+        openView(order) {
+          order = JSON.parse(JSON.stringify(order));
+          this.modalOrder = order;
+          this.showViewModal = true;
+        },
+
+        openEdit(order) {
+          order = JSON.parse(JSON.stringify(order));
+          order.edit_url = `/edit_order/${order.id}`;
+          this.modalOrder = order;
+          this.showEditModal = true;
+        }
+      }
+    }
+  </script>
+</body>
+</html>

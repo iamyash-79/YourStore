@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Return & Refund Policy - YourStore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+  
+    <!-- Main Content Area for Return & Refund Policy -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Return & Refund Policy</h1>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-4xl mx-auto">
+                <div class="prose max-w-none text-gray-700">
+                    <p class="text-lg leading-relaxed mb-6">
+                        At <span class="font-semibold text-indigo-600">YourStore</span>, your satisfaction is our priority. If you are not entirely satisfied with your purchase, we're here to help.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">1. Returns Eligibility</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        To be eligible for a return, your item must be unused and in the same condition that you received it. It must also be in the original packaging. Our return policy lasts 5 days from the date of purchase. If 30 days have gone by since your purchase, unfortunately, we can’t offer you a refund or exchange.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        Several types of goods are exempt from being returned. Perishable goods such as food, flowers, newspapers or magazines cannot be returned. We also do not accept products that are intimate or sanitary goods, hazardous materials, or flammable liquids or gases.
+                    </p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Additional non-returnable items:</h3>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-1 mb-6">
+                        <li>Gift cards</li>
+                        <li>Downloadable software products</li>
+                        <li>Some health and personal care items</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">2. How to Initiate a Return</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        To complete your return, we require a receipt or proof of purchase. Please do not send your purchase back to the manufacturer.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        To initiate a return, please follow these steps:
+                        <ol class="list-decimal list-inside text-lg leading-relaxed space-y-2 mt-2">
+                            <li>Contact our customer service team at <a href="mailto:support@yourstore.com" class="text-indigo-600 hover:underline">support@yourstore.com</a> within 30 days of your purchase.</li>
+                            <li>Provide your order number and the reason for the return.</li>
+                            <li>Our team will provide you with instructions on how to send back your item(s).</li>
+                        </ol>
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">3. Refunds</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        Once your return is received and inspected, we will send you an email to notify you that we have received your returned item. We will also notify you of the approval or rejection of your refund.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        If approved, your refund will be processed, and a credit will automatically be applied to your original method of payment, within a certain amount of days.
+                    </p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Late or missing refunds:</h3>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-1 mb-6">
+                        <li>If you haven’t received a refund yet, first check your bank account again.</li>
+                        <li>Then contact your credit card company, it may take some time before your refund is officially posted.</li>
+                        <li>Next contact your bank. There is often some processing time before a refund is posted.</li>
+                        <li>If you’ve done all of this and you still have not received your refund yet, please contact us at <a href="mailto:support@yourstore.com" class="text-indigo-600 hover:underline">support@yourstore.com</a>.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">4. Exchanges</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        We only replace items if they are defective or damaged. If you need to exchange it for the same item, send us an email at <a href="mailto:support@yourstore.com" class="text-indigo-600 hover:underline">support@yourstore.com</a> and follow the instructions provided.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">5. Shipping Returns</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        You will be responsible for paying for your own shipping costs for returning your item. Shipping costs are non-refundable. If you receive a refund, the cost of return shipping will be deducted from your refund.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        Depending on where you live, the time it may take for your exchanged product to reach you, may vary.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        If you are shipping an item over $75, you should consider using a trackable shipping service or purchasing shipping insurance. We don’t guarantee that we will receive your returned item.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">6. Gifts</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        If the item was marked as a gift when purchased and shipped directly to you, you’ll receive a gift credit for the value of your return. Once the returned item is received, a gift certificate will be mailed to you.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        If the item wasn’t marked as a gift when purchased, or the gift giver had the order shipped to themselves to give to you later, we will send a refund to the gift giver and they will find out about your return.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

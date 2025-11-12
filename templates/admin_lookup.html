@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Lookup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- 🔝 Top Bar -->
+  <header class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold text-gray-800">Admin Panel</h1>
+    <div class="flex gap-4 items-center">
+      <span class="text-gray-700">👤 {{ user.full_name }}</span>
+      <a href="/logout" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Logout</a>
+    </div>
+  </header>
+
+  <!-- 🔍 Lookup Panel -->
+  <div class="max-w-4xl mx-auto bg-white mt-10 p-6 rounded-xl shadow-md space-y-10">
+    <h2 class="text-2xl font-bold mb-6">🔎 Admin Lookup</h2>
+
+    <!-- Seller Section -->
+    <div>
+      <div class="flex gap-2 mb-3">
+        <input type="number" placeholder="Enter Seller ID" class="flex-1 border p-2 rounded" id="sellerId">
+        <button onclick="fetchSeller()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">Search</button>
+        <button onclick="clearBox('sellerId','sellerResult')" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Clear</button>
+      </div>
+      <div id="sellerResult" class="hidden border p-4 rounded bg-gray-50"></div>
+    </div>
+
+    <!-- Product Section -->
+    <div>
+      <div class="flex gap-2 mb-3">
+        <input type="number" placeholder="Enter Product ID" class="flex-1 border p-2 rounded" id="productId">
+        <button onclick="fetchProduct()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Search</button>
+        <button onclick="clearBox('productId','productResult')" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Clear</button>
+      </div>
+      <div id="productResult" class="hidden border p-4 rounded bg-gray-50"></div>
+    </div>
+
+    <!-- Order Section -->
+    <div>
+      <div class="flex gap-2 mb-3">
+        <input type="number" placeholder="Enter Order ID" class="flex-1 border p-2 rounded" id="orderId">
+        <button onclick="fetchOrder()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded">Search</button>
+        <button onclick="clearBox('orderId','orderResult')" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Clear</button>
+      </div>
+      <div id="orderResult" class="hidden border p-4 rounded bg-gray-50"></div>
+    </div>
+
+    <!-- User Section -->
+    <div>
+      <div class="flex gap-2 mb-3">
+        <input type="number" placeholder="Enter User ID" class="flex-1 border p-2 rounded" id="userId">
+        <button onclick="fetchUser()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded">Search</button>
+        <button onclick="clearBox('userId','userResult')" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Clear</button>
+      </div>
+      <div id="userResult" class="hidden border p-4 rounded bg-gray-50"></div>
+    </div>
+  </div>
+
+  <!-- 🧠 Script -->
+  <script>
+    async function fetchData(url, resultId, panelUrl = null, labelMap = {}) {
+      const resBox = document.getElementById(resultId);
+      resBox.innerHTML = '⏳ Loading...';
+      resBox.classList.remove('hidden');
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!data.success) {
+          resBox.innerHTML = `<p class="text-red-600">❌ ${data.message || 'Not found.'}</p>`;
+          return;
+        }
+
+        const details = data.details;
+        let html = '<ul class="space-y-1">';
+        for (const key in details) {
+          const label = labelMap[key] || key;
+          html += `<li><strong>${label}:</strong> ${details[key]}</li>`;
+        }
+        html += '</ul>';
+
+        if (panelUrl) {
+          html += `<a href="${panelUrl}" target="_blank" class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">🔗 View Full Panel</a>`;
+        }
+
+        resBox.innerHTML = html;
+      } catch (error) {
+        resBox.innerHTML = `<p class="text-red-600">⚠️ Error fetching data</p>`;
+      }
+    }
+
+    function clearBox(inputId, resultId) {
+      document.getElementById(inputId).value = "";
+      const box = document.getElementById(resultId);
+      box.innerHTML = "";
+      box.classList.add("hidden");
+    }
+
+    function fetchSeller() {
+      const id = document.getElementById("sellerId").value;
+      if (id) {
+        fetchData(`/api/seller/${id}`, "sellerResult", `/admin/seller-panel/${id}/dashboard`, {
+          full_name: "Name", email: "Email", contact: "Contact", address: "Address"
+        });
+      }
+    }
+
+    function fetchProduct() {
+      const id = document.getElementById("productId").value;
+      if (id) {
+        fetchData(`/api/product/${id}`, "productResult", null, {
+          name: "Name", price: "Price", discount_price: "Discount", seller_id: "Seller ID"
+        });
+      }
+    }
+
+    function fetchOrder() {
+      const id = document.getElementById("orderId").value;
+      if (id) {
+        fetchData(`/api/order/${id}`, "orderResult", null, {
+          user_id: "User ID", total_price: "Total", status: "Status", created_at: "Placed On"
+        });
+      }
+    }
+
+    function fetchUser() {
+      const id = document.getElementById("userId").value;
+      if (id) {
+        fetchData(`/api/user/${id}`, "userResult", `/admin/user-panel/${id}/home`, {
+          full_name: "Name", email: "Email", contact: "Contact"
+        });
+      }
+    }
+  </script>
+</body>
+</html>

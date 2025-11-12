@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Details – CgMovies</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #e2e8f0;
+    }
+
+    a {
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-900 text-slate-100">
+
+  <!-- Header -->
+  {% include 'um_topbar.html' %}
+
+  <!-- Main Content -->
+  <main class="flex-S py-16 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto bg-slate-800 shadow-xl rounded-xl p-8 border border-slate-700">
+      <h1 class="text-3xl font-bold text-indigo-400 mb-6">📞 Contact Information</h1>
+
+      <div class="space-y-6 text-base">
+
+        <!-- Full Name -->
+        <div>
+          <p class="font-semibold text-slate-300">Name:</p>
+          <p class="text-slate-100">Team CgMovies</p>
+        </div>
+
+        <!-- Address -->
+        <div>
+          <p class="font-semibold text-slate-300">Address:</p>
+          <a href="https://www.google.com" target="_blank" class="text-indigo-400 hover:text-indigo-300">
+            640/9, Zakir Nagar, Okhla, New, Near Islah Masjid, Jamia Nagar-110025
+          </a>
+        </div>
+
+        <!-- Instagram (instead of Phone) -->
+        <div>
+          <p class="font-semibold text-slate-300">Instagram:</p>
+          <a href="https://instagram.com/CgMovies" target="_blank" class="text-pink-400 hover:text-pink-300">
+            @CgMovies
+          </a>
+        </div>
+
+        <!-- WhatsApp -->
+        <div>
+          <p class="font-semibold text-slate-300">WhatsApp:</p>
+          <a href="https://wa.me/917987190554" target="_blank" class="text-green-400 hover:text-green-300">
+            Whatsapp Us
+          </a>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <p class="font-semibold text-slate-300">Email:</p>
+          <a href="mailto:cgmovieshub@gmail.com" class="text-blue-400 hover:text-blue-300">
+            cgmovieshubofficial79@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Optional Note -->
+      <div class="mt-8 text-sm text-slate-400">
+        <p>If you have any questions or need help regarding your order or services, feel free to reach out through the above contact details.</p>
+      </div>
+    </div>
+  </main>
+
+    {% include 'um_footer.html' %}
+
+</body>
+</html>

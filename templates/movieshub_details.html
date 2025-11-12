@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CgMovies</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    .scroll-images::-webkit-scrollbar { display: none; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f0f0f;
+      color: #e0e0e0;
+    }
+    .neon-button {
+      background: #111;
+      color: #fff;
+      border: 1px solid #444;
+      box-shadow: 0 0 10px #6b21a8, 0 0 20px #6b21a8 inset;
+      transition: all 0.3s ease;
+    }
+    .neon-button:hover {
+      box-shadow: 0 0 15px #9333ea, 0 0 25px #9333ea inset;
+    }
+  </style>
+</head>
+<body x-data="moviePage" x-init="init()">
+
+  {% include 'um_topbar.html' %}
+
+  <!-- Help Button -->
+  <a href="/m_contact" title="Need help?" class="fixed top-20 right-6 z-50">
+    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-full shadow-lg font-semibold transition duration-300 ease-in-out">
+      🛈 Help
+    </button>
+  </a>
+
+  <!-- Main Content -->
+  <main class="pt-24 pb-10 px-4 max-w-4xl mx-auto space-y-8">
+
+    <!-- Image Viewer -->
+    <div class="w-full">
+      <div class="relative bg-black aspect-[16/9] overflow-hidden rounded-xl shadow-lg">
+        <button @click="prevImage"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-gray-800 hover:bg-purple-700 text-white p-2 rounded-full z-10">
+          ◀
+        </button>
+
+        <img :src="`${basePath}${images[currentImageIndex]}`"
+             alt="movie Image"
+             class="w-full h-full object-contain transition duration-300" />
+
+        <button @click="nextImage"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-gray-800 hover:bg-purple-700 text-white p-2 rounded-full z-10">
+          ▶
+        </button>
+      </div>
+
+      <!-- Dots -->
+      <div class="flex justify-center space-x-2 mt-3">
+        <template x-for="(img, i) in images" :key="i">
+          <div :class="{
+            'w-3 h-3 rounded-full': true,
+            'bg-purple-500': i === currentImageIndex,
+            'bg-gray-500': i !== currentImageIndex
+          }"></div>
+        </template>
+      </div>
+    </div>
+
+    <!-- movie Info Center Aligned -->
+<div class="w-full p-6 bg-[#161616] rounded-xl shadow-md space-y-6 text-center">
+  <h1 class="text-3xl font-extrabold text-purple-500">{{ movie['name'] }}</h1>
+
+  <!-- Description -->
+  <div>
+    <p class="text-sm text-gray-400 mb-1">Description</p>
+    <p class="text-gray-300 leading-relaxed whitespace-pre-line mx-auto max-w-2xl"
+       :class="{'line-clamp-5': !showFullDescription}">
+      {{ movie['description'] }}
+    </p>
+    <template x-if="isLongDescription">
+      <button @click="showFullDescription = !showFullDescription" class="text-purple-400 text-sm underline mt-1">
+        <span x-text="showFullDescription ? 'Show Less' : 'Show More'"></span>
+      </button>
+    </template>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex flex-wrap gap-4 justify-center">
+    <button @click="handleBuyNow"
+            class="neon-button py-3 px-6 rounded-lg text-base font-medium bg-purple-700 hover:bg-purple-800 text-white">
+      🛒 Purchase Now
+    </button>
+  </div>
+</div>
+  </main>
+
+    {% include 'um_footer.html' %}
+
+  <!-- JSON Data -->
+  <script id="movie-data" type="application/json">{{ movie | tojson }}</script>
+  <script id="image-list" type="application/json">{{ movie['images'] | tojson }}</script>
+
+  <!-- Alpine Logic -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('moviePage', () => ({
+        basePath: '{{ url_for("static", filename="uploads/") }}',
+        movieData: null,
+        images: [],
+        currentImageIndex: 0,
+        showFullDescription: false,
+        isLongDescription: false,
+
+        init() {
+          this.movieData = JSON.parse(document.getElementById('movie-data').textContent);
+          this.images = JSON.parse(document.getElementById('image-list').textContent);
+          const desc = this.movieData.description || '';
+          this.isLongDescription = (desc.match(/\n/g) || []).length > 4;
+        },
+
+        prevImage() {
+          if (this.currentImageIndex > 0) this.currentImageIndex--;
+        },
+
+        nextImage() {
+          if (this.currentImageIndex < this.images.length - 1) this.currentImageIndex++;
+        },
+
+        handleBuyNow() {
+          const movieId = this.movieData.id;
+          window.location.href = `/user_checkoutm/${movieId}`;
+        }
+      }))
+    });
+  </script>
+</body>
+</html>

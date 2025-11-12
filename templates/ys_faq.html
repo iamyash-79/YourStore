@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - YourStore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        /* FAQ Accordion Styling */
+        .accordion-item {
+            border-bottom: 1px solid #e2e8f0; /* gray-200 */
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            cursor: pointer;
+            font-weight: 600; /* font-semibold */
+            color: #343a40; /* text-gray-800 */
+        }
+        .accordion-header:hover {
+            color: #4f46e5; /* hover:text-indigo-600 */
+        }
+        .accordion-content {
+            display: none; /* Hidden by default */
+            padding-bottom: 1rem;
+            color: #4a5568; /* text-gray-600 */
+            line-height: 1.6;
+        }
+        .accordion-header svg {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active svg {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+   <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+  
+    <!-- Main Content Area for FAQ -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Frequently Asked Questions</h1>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-4xl mx-auto">
+                <div class="accordion-container">
+                    <!-- FAQ Item 1 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-lg">How do I place an order?</h3>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>To place an order, simply browse our shop, add desired items to your cart, and proceed to checkout. Follow the steps to provide shipping information and select your payment method.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 2 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-lg">What payment methods do you accept?</h3>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>We accept UPI and Cash on Delivery (COD). Credit/Debit card payments are currently disabled.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 3 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-lg">How can I track my order?</h3>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Once your order is shipped, you will receive an email with a tracking number and a link to track your package. You can also find tracking information on your "My Orders" page.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 4 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-lg">What is your return policy?</h3>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Our return policy allows returns within 5 days of purchase for unused items in their original packaging. Please refer to our <a href="return.html" class="text-indigo-600 hover:underline">Return & Refund Policy</a> page for full details.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 5 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-lg">How do I change my shipping address?</h3>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>You can change your shipping address during the checkout process when placing a new order. For existing orders, please contact our customer support team immediately.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Item 6 -->
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="text-lg">Do you offer international shipping?</h3>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="accordion-content">
+                            <p>We currently ship to a limited number of international destinations. Please check the shipping options available at checkout for your country.</p>
+                        </div>
+                    </div>
+
+                    <!-- Add more FAQ items as needed -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // JavaScript for FAQ accordion functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling; // The content div
+                    const isActive = header.classList.contains('active');
+
+                    // Close all other open accordions
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            otherHeader.nextElementSibling.style.display = 'none';
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    if (isActive) {
+                        header.classList.remove('active');
+                        content.style.display = 'none';
+                    } else {
+                        header.classList.add('active');
+                        content.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy - CgMovies</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #020617);
+      color: #e0e7ff;
+    }
+
+    .glass-box {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .prose p {
+      color: #cbd5e1;
+    }
+
+    .prose h2, .prose h3 {
+      color: #facc15;
+    }
+
+    .prose a {
+      color: #60a5fa;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #475569;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- ✅ Header Include -->
+  {% include 'um_topbar.html' %}
+
+  <!-- ✅ Main Content Area -->
+  <main class="flex-grow py-16 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto glass-box rounded-xl p-8 border border-indigo-500">
+      <h1 class="text-3xl md:text-4xl font-bold text-center text-indigo-400 mb-10">🔐 Privacy Policy</h1>
+
+      <div class="prose max-w-none prose-invert">
+        <p class="text-lg leading-relaxed mb-6">
+          This Privacy Policy describes how <span class="text-indigo-400 font-semibold">CgMovies</span> collects, uses, and discloses your Personal Information when you visit or make a purchase from the Site.
+        </p>
+
+        <h2 class="text-2xl font-semibold mb-4 mt-8">1. Collection of Personal Information</h2>
+        <p class="mb-4">
+          When you visit the Site, we collect certain information about your device, your interaction with the Site, and information necessary to process your purchases.
+        </p>
+
+        <h3 class="text-xl font-semibold mb-2 mt-6">Device information</h3>
+        <ul class="list-disc list-inside text-lg space-y-1 mb-4">
+          <li><strong>Examples:</strong> IP address, browser version, time zone, cookies, what products you view.</li>
+          <li><strong>Purpose:</strong> Load the site accurately and analyze usage to optimize it.</li>
+          <li><strong>Source:</strong> Collected automatically via cookies, pixels, or tags.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold mb-2 mt-6">Order information</h3>
+        <ul class="list-disc list-inside text-lg space-y-1 mb-4">
+          <li><strong>Purpose:</strong> Fulfill orders, process payments, send invoices, and prevent fraud.</li>
+          <li><strong>Source:</strong> Collected directly from you.</li>
+        </ul>
+
+        <h3 class="text-xl font-semibold mb-2 mt-6">Customer support</h3>
+        <ul class="list-disc list-inside text-lg space-y-1 mb-6">
+          <li><strong>Purpose:</strong> To assist and support users.</li>
+          <li><strong>Source:</strong> Information provided by you.</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold mb-4 mt-8">2. Your Rights</h2>
+        <p class="mb-6">
+          If you're in the EEA or California, you can request access, correction, or deletion of your personal data by emailing us.
+        </p>
+
+        <h2 class="text-2xl font-semibold mb-4 mt-8">3. Cookies</h2>
+        <p class="mb-4">
+          Cookies help remember your preferences and improve your experience. You can control cookie behavior via your browser settings.
+        </p>
+        <p class="mb-6">
+          For more information, visit <a href="https://www.allaboutcookies.org" target="_blank">www.allaboutcookies.org</a>.
+        </p>
+
+        <h2 class="text-2xl font-semibold mb-4 mt-8">4. Changes to Policy</h2>
+        <p class="mb-6">
+          We may update this Privacy Policy to reflect changes in our practices or for regulatory reasons.
+        </p>
+
+        <h2 class="text-2xl font-semibold mb-4 mt-8">5. Contact</h2>
+        <p class="mb-6">
+          Questions or concerns? Contact us at 
+          <a href="mailto:cgmovieshub@gmail.com" class="underline text-blue-400 hover:text-blue-300">cgmovieshub@gmail.com</a>.
+        </p>
+      </div>
+    </div>
+  </main>
+
+    {% include 'um_footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    .scroll-images::-webkit-scrollbar { display: none; }
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen" x-data="productPage" x-init="init()">
+
+  {% include 'user_topbar.html' %}
+
+<div class="md:hidden pt-20 bg-white">
+  <div class="overflow-x-auto scroll-images snap-x snap-mandatory flex w-full h-[220px] relative" @scroll.passive="handleScrollDots($event)">
+    <template x-for="(img, i) in images" :key="i">
+      <img
+        :src="`${basePath}${img}`"
+        class="snap-center w-full flex-shrink-0 object-contain h-[220px] bg-white"
+        @click="currentImageIndex = i"
+      >
+    </template>
+  </div>
+  <!-- Dots -->
+  <div class="flex justify-center space-x-1 py-2 bg-white">
+    <template x-for="(img, i) in images" :key="i">
+      <div
+        :class="{
+          'w-2.5 h-2.5 bg-indigo-600 rounded-full': true,
+          'opacity-100': i === currentImageIndex,
+          'opacity-40': i !== currentImageIndex
+        }"
+      ></div>
+    </template>
+  </div>
+</div>
+
+
+  <!-- ✅ Main Section -->
+  <main class="flex flex-col md:flex-row pt-6 md:pt-24 pb-10 px-4">
+
+    <!-- Desktop Viewer -->
+    <div class="hidden md:flex md:w-1/2 p-4 bg-white rounded-lg items-center justify-center sticky top-20 h-[500px]">
+      <div class="relative w-full max-w-xl">
+        <button @click="prevImage"
+                class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-100 hover:bg-gray-300 text-gray-800 rounded-full p-2 shadow">
+          ◀
+        </button>
+        <img :src="`${basePath}${images[currentImageIndex]}`"
+             class="w-full h-[500px] object-contain rounded shadow bg-white" alt="Product Image">
+        <button @click="nextImage"
+                class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-100 hover:bg-gray-300 text-gray-800 rounded-full p-2 shadow">
+          ▶
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="w-full md:w-1/2 p-6 space-y-6 bg-gray-50 rounded-lg">
+      <h1 class="text-3xl font-bold text-indigo-700">{{ product['name'] }}</h1>
+
+      <!-- Price -->
+      <div>
+        <p class="text-sm text-gray-600 mb-1">Price</p>
+        {% if product['discount_price'] and product['discount_price']|float < product['price']|float %}
+          <div class="text-2xl font-bold text-green-600">₹{{ product['discount_price'] }}
+            <span class="text-sm text-red-500 line-through ml-2">₹{{ product['price'] }}</span>
+          </div>
+        {% else %}
+          <div class="text-2xl font-bold text-gray-800">₹{{ product['price'] }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Description -->
+      <div>
+        <p class="text-sm text-gray-600 mb-1">Description</p>
+        <p class="text-gray-700 leading-relaxed whitespace-pre-line" :class="{'line-clamp-5': !showFullDescription}">
+          {{ product['description'] }}
+        </p>
+        <template x-if="isLongDescription">
+          <button @click="showFullDescription = !showFullDescription" class="text-indigo-600 text-sm underline mt-1">
+            <span x-text="showFullDescription ? 'Show Less' : 'Show More'"></span>
+          </button>
+        </template>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-center sm:justify-start gap-4 flex-nowrap">
+        <button @click="handleAddToCart"
+                class="flex-1 sm:flex-none bg-gray-200 hover:bg-gray-300 text-gray-800 py-3 px-6 rounded-lg text-base font-medium transition">
+          ➕ Add to Cart
+        </button>
+        <button @click="handleBuyNow"
+                class="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg text-base font-medium transition">
+          🛒 Order Now
+        </button>
+      </div>
+    </div>
+  </main>
+
+  {% include 'user_footer.html' %}
+
+  <!-- JSON Data -->
+  <script id="product-data" type="application/json">{{ product | tojson }}</script>
+  <script id="image-list" type="application/json">{{ product['images'] | tojson }}</script>
+
+  <!-- Alpine.js Logic -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('productPage', () => ({
+        basePath: '{{ url_for("static", filename="uploads/products/") }}',
+        productData: null,
+        images: [],
+        currentImageIndex: 0,
+        showFullDescription: false,
+        isLongDescription: false,
+
+        init() {
+          this.productData = JSON.parse(document.getElementById('product-data').textContent);
+          this.images = JSON.parse(document.getElementById('image-list').textContent);
+          const desc = this.productData.description || '';
+          this.isLongDescription = (desc.match(/\n/g) || []).length > 4;
+        },
+
+        prevImage() {
+          if (this.currentImageIndex > 0) this.currentImageIndex--;
+        },
+
+        nextImage() {
+          if (this.currentImageIndex < this.images.length - 1) this.currentImageIndex++;
+        },
+
+        handleAddToCart() {
+          const productId = this.productData.id;
+          fetch(`/add_to_cart/${productId}`)
+            .then(res => res.json())
+            .then(data => alert(data.message || 'Added to cart!'))
+            .catch(() => alert('Something went wrong.'));
+        },
+
+        handleBuyNow() {
+          const productId = this.productData.id;
+          window.location.href = `/user_checkout/${productId}`;
+        },
+
+        handleScrollDots(event) {
+          const scrollLeft = event.target.scrollLeft;
+          const width = event.target.offsetWidth;
+          this.currentImageIndex = Math.round(scrollLeft / width);
+        }
+
+      }))
+    });
+  </script>
+</body>
+</html>

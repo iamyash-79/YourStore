@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a0aec0;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  {% include 'seller_topbar.html' %}
+
+  <main class="flex-grow py-16 md:py-20">
+    <div class="container mx-auto px-4">
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-xl mx-auto space-y-12">
+        <!-- Update Full Name -->
+        <form method="POST" class="space-y-6">
+          <div>
+            <label class="block text-gray-700 text-sm font-medium mb-1">Full Name</label>
+            <input type="text" name="full_name" value="{{ user.full_name }}" required
+              class="w-full px-3 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-indigo-300 focus:outline-none" />
+          </div>
+          <button type="submit"
+            class="px-4 py-2 rounded-md bg-indigo-500 text-white hover:bg-indigo-400 shadow w-full">💾 Save Changes</button>
+        </form>
+
+        <!-- Login Info -->
+        <div class="bg-white p-6 rounded-xl border border-gray-200 shadow">
+          <h2 class="text-xl font-semibold text-indigo-600 mb-4">🔐 Login Info</h2>
+          <div class="space-y-6">
+            <div class="relative">
+              <label class="text-gray-600 block">Email</label>
+              <p class="text-gray-900 mt-1 break-all">{{ user.email }}</p>
+              <button onclick="document.getElementById('infoModal').classList.remove('hidden')"
+                class="absolute top-0 right-0 text-xs px-2 py-1 bg-blue-500 text-white rounded shadow hover:bg-blue-400">✉️ Change</button>
+            </div>
+            <div class="relative">
+              <label class="text-gray-600 block">Mobile</label>
+              <p class="text-gray-900 mt-1 break-words">{{ user.contact }}</p>
+            </div>
+            <div class="relative">
+              <label class="text-gray-600 block">Password</label>
+              <p class="text-gray-900 mt-1">••••••••</p>
+              <button onclick="document.getElementById('passwordModal').classList.remove('hidden')"
+                class="absolute top-0 right-0 text-xs px-2 py-1 bg-yellow-500 text-black rounded shadow hover:bg-yellow-400">🔒 Change</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 🔧 Email/Mobile Modal -->
+  <div id="infoModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl border border-gray-200 text-gray-900 w-full max-w-md relative shadow-xl">
+      <button onclick="document.getElementById('infoModal').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold mb-4 text-indigo-600">Change Email or Mobile</h2>
+      <form method="POST" action="/change-sellerinfo" class="space-y-4" id="change-info-form">
+        <label class="text-sm font-medium block">New Email</label>
+        <div class="flex gap-2">
+          <input type="email" name="email" id="change-email" placeholder="you@example.com" autocomplete="off"
+            class="flex-1 px-3 py-2 rounded-md border border-gray-300" />
+          <button type="button" onclick="sendChangeOTP()"
+            class="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-400">Send OTP</button>
+        </div>
+
+        <div id="change-otp-section" style="display: none;">
+          <label class="text-sm font-medium block mt-2">Enter OTP</label>
+          <div class="flex gap-2">
+            <input type="text" id="change-otp" name="otp"
+              class="flex-1 px-3 py-2 rounded-md border border-gray-300" />
+            <button type="button" onclick="verifyChangeOTP()"
+              class="px-3 py-2 bg-green-500 text-white rounded hover:bg-green-400">Verify</button>
+          </div>
+        </div>
+
+        <div class="text-center text-sm text-gray-400 font-medium">OR</div>
+
+        <label class="text-sm font-medium block mt-2">New Mobile</label>
+        <input type="text" name="contact" placeholder="New Mobile Number"
+          class="w-full px-3 py-2 rounded-md border border-gray-300" />
+
+        <button type="submit"
+          class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-400 shadow mt-2 w-full">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 🔒 Password Modal -->
+  <div id="passwordModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center hidden z-50">
+    <div class="bg-white p-6 rounded-xl border border-gray-200 text-gray-900 w-full max-w-md relative shadow-xl">
+      <button onclick="document.getElementById('passwordModal').classList.add('hidden')" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+      <h2 class="text-xl font-semibold mb-4 text-indigo-600">Change Password</h2>
+      <form method="POST" action="/change-password" class="space-y-4">
+        <input type="password" name="old_password" placeholder="Current Password" required
+          class="w-full px-3 py-2 rounded-md border border-gray-300" autocomplete="off" />
+        <input type="password" name="new_password" placeholder="New Password" required
+          class="w-full px-3 py-2 rounded-md border border-gray-300" autocomplete="new-password" />
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required
+          class="w-full px-3 py-2 rounded-md border border-gray-300" autocomplete="new-password" />
+        <button type="submit" class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-400 shadow w-full">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ JS for OTP -->
+  <script>
+    function sendChangeOTP() {
+      const email = document.getElementById("change-email").value.trim();
+      if (!email) return alert("⚠️ Enter your email to send OTP.");
+      fetch("/send-otp", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, mode: "change" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("✅ OTP sent.");
+          document.getElementById("change-otp-section").style.display = "block";
+        } else alert("❌ " + (data.message || "Failed to send OTP."));
+      })
+      .catch(() => alert("❌ Something went wrong."));
+    }
+
+    function verifyChangeOTP() {
+      const otp = document.getElementById("change-otp").value.trim();
+      if (!otp) return alert("⚠️ Enter the OTP.");
+      fetch("/verify-otp", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ otp, mode: "change" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.verified) {
+          alert("✅ OTP Verified!");
+          document.getElementById("change-otp").style.backgroundColor = "#d1fae5";
+        } else alert("❌ " + (data.message || "Incorrect OTP."));
+      })
+      .catch(() => alert("❌ Could not verify OTP."));
+    }
+  </script>
+</body>
+</html>

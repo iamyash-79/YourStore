@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Details – Yash Cyber Cafe</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Header -->
+  {% include 'user_topbar.html' %}
+
+  <!-- Main Content -->
+  <main class="flex-grow py-16 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 border border-gray-200">
+      <h1 class="text-3xl font-bold text-indigo-700 mb-6">📞 Contact Information</h1>
+
+      <div class="space-y-6 text-gray-800 text-base">
+
+        <!-- Full Name -->
+        <div>
+          <p class="font-semibold">Name:</p>
+          <p>Yash Cyber Cafe Gedra</p>
+        </div>
+
+        <!-- Address -->
+        <div>
+          <p class="font-semibold">Address:</p>
+          <a href="https://www.google.com/maps?q=Yash+Cyber+Cafe+Gedra" target="_blank" class="text-blue-600 hover:underline">
+            Yash Cyber Cafe, Nagri, Chhattisgarh – 493778
+          </a>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <p class="font-semibold">Phone:</p>
+          <a href="tel:+917987190554" class="text-blue-600 hover:underline">
+            +91 79871 90554
+          </a>
+        </div>
+
+        <!-- WhatsApp -->
+        <div>
+          <p class="font-semibold">WhatsApp:</p>
+          <a href="https://wa.me/917987190554" target="_blank" class="text-green-600 hover:underline">
+            +91 79871 90554
+          </a>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <p class="font-semibold">Email:</p>
+          <a href="mailto:yashcybercafeofficial@gmail.com" class="text-blue-600 hover:underline">
+            yashcybercafeofficial@gmail.com
+          </a>
+        </div>
+      </div>
+
+      <!-- Optional Note -->
+      <div class="mt-8 text-sm text-gray-600">
+        <p>If you have any questions or need help regarding your order or services, feel free to reach out through the above contact details.</p>
+      </div>
+    </div>
+  </main>
+
+    {% include 'user_footer.html' %}
+
+</body>
+</html>

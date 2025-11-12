@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & Promotions - Your E-commerce Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header Section (Copied from other pages) -->
+    <header class="bg-white shadow-sm py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold text-indigo-600 rounded-lg p-2 hover:text-indigo-700 transition-colors duration-300">
+                YourStore
+            </a>
+
+            <!-- Navigation Menu -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Home</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Shop</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Categories</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Contact</a>
+            </nav>
+
+            <!-- User Actions (Cart, Account, Search) -->
+            <div class="flex items-center space-x-4">
+                <!-- Search Input and Button -->
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Search..." class="pl-4 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 w-32 md:w-48">
+                    <button class="absolute right-0 top-0 mt-2 mr-2 text-gray-500 hover:text-indigo-600 focus:outline-none">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </button>
+                </div>
+                <button class="relative p-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">3</span>
+                </button>
+                <!-- Account Dropdown -->
+                {% if user %}
+      <!-- Logged-in user dropdown -->
+      <div class="relative dropdown">
+        <button class="p-2 text-gray-700 hover:text-indigo-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu">
+          <a href="account1">My Profile</a>
+          <a href="order1">Orders</a>
+          <a href="/logout">Logout</a>
+        </div>
+      </div>
+      {% else %}
+      <!-- Not logged in: Show login button -->
+      <a href="/mobile" class="bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition-colors">
+        Login
+      </a>
+      {% endif %}
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="md:hidden bg-white mt-2 border-t border-gray-200 hidden">
+            <nav class="flex flex-col items-center py-4 space-y-2">
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2 w-full text-center">Home</a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2 w-full text-center">Shop</a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2 w-full text-center">Categories</a>
+                <a href="#" class="block text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2 w-full text-center">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area for Sales & Promotions -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Sales & Promotions</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Promotion Card 1 -->
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl shadow-lg p-8 flex flex-col justify-between items-center text-center transform hover:scale-105 transition-transform duration-300">
+                    <h2 class="text-3xl font-bold mb-4">Summer Sale!</h2>
+                    <p class="text-lg opacity-90 mb-6">Get up to 50% off on selected items across all categories. Don't miss out!</p>
+                    <a href="#" class="inline-block bg-white text-indigo-700 font-bold py-3 px-8 rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300">
+                        Shop Sale
+                    </a>
+                </div>
+
+                <!-- Promotion Card 2 -->
+                <div class="bg-white border border-gray-200 rounded-xl shadow-md p-8 flex flex-col justify-between items-center text-center transform hover:scale-105 transition-transform duration-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">New Arrivals - 20% Off</h2>
+                    <p class="text-gray-600 text-lg mb-6">Be the first to grab our latest collections with a special introductory discount.</p>
+                    <a href="#" class="inline-block bg-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-indigo-700 transition-colors duration-300">
+                        Explore New Arrivals
+                    </a>
+                </div>
+
+                <!-- Promotion Card 3 -->
+                <div class="md:col-span-2 bg-yellow-500 text-white rounded-xl shadow-lg p-8 flex flex-col md:flex-row justify-between items-center text-center md:text-left transform hover:scale-105 transition-transform duration-300">
+                    <div class="mb-4 md:mb-0 md:mr-6">
+                        <h2 class="text-3xl font-bold mb-2">Flash Deal: Electronics!</h2>
+                        <p class="text-lg opacity-90">Limited time offer on all electronics. Ends in:</p>
+                        <div id="countdown" class="text-4xl font-extrabold mt-2">00h 00m 00s</div>
+                    </div>
+                    <a href="#" class="inline-block bg-white text-yellow-700 font-bold py-3 px-8 rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300">
+                        Grab Deal
+                    </a>
+                </div>
+
+                <!-- Promotion Card 4 -->
+                <div class="bg-white border border-gray-200 rounded-xl shadow-md p-8 flex flex-col justify-between items-center text-center transform hover:scale-105 transition-transform duration-300">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Free Shipping on Orders Over $50</h2>
+                    <p class="text-gray-600 text-lg mb-6">Enjoy complimentary shipping on all orders exceeding $50. Shop more, save more!</p>
+                    <a href="#" class="inline-block bg-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-md hover:bg-indigo-700 transition-colors duration-300">
+                        Start Shopping
+                    </a>
+                </div>
+
+                <!-- Promotion Card 5 -->
+                <div class="bg-green-500 text-white rounded-xl shadow-lg p-8 flex flex-col justify-between items-center text-center transform hover:scale-105 transition-transform duration-300">
+                    <h2 class="text-3xl font-bold mb-4">Bundle & Save!</h2>
+                    <p class="text-lg opacity-90 mb-6">Buy 2, Get 1 Free on selected apparel items. Mix and match your favorites!</p>
+                    <a href="#" class="inline-block bg-white text-green-700 font-bold py-3 px-8 rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300">
+                        View Bundles
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+<div class="hidden md:block">
+  {% include 'user_footer.html' %}
+</div>
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        // Countdown Timer for Flash Deal (Example)
+        document.addEventListener('DOMContentLoaded', function() {
+            const countdownElement = document.getElementById('countdown');
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 2); // Set target to 2 days from now
+            targetDate.setHours(targetDate.getHours() + 5); // 5 hours
+            targetDate.setMinutes(targetDate.getMinutes() + 30); // 30 minutes
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const distance = targetDate.getTime() - now;
+
+                if (distance < 0) {
+                    countdownElement.textContent = "EXPIRED!";
+                    clearInterval(countdownInterval);
+                    return;
+                }
+
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.textContent = `${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+            }
+
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Initial call to display immediately
+        });
+    </script>
+</body>
+</html>

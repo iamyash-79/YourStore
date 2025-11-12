@@ -1,0 +1,85 @@
+<!-- Header Section (Consistent with Seller Pages) -->
+<header class="bg-white shadow-sm py-4">
+  <!-- ✅ Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="fixed top-16 left-0 right-0 mx-auto max-w-md px-4 z-50">
+      {% for category, msg in messages %}
+        <div class="mb-3 p-3 text-center text-white rounded
+            {% if category == 'success' %}bg-green-500
+            {% elif category == 'error' %}bg-red-500
+            {% else %}bg-yellow-500{% endif %}">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+    <div class="container mx-auto px-4 flex justify-between items-center">
+        <!-- Logo -->
+        <a href="seller_dashboard" class="text-2xl font-bold text-indigo-600 rounded-lg p-2 hover:text-indigo-700 transition-colors duration-300">
+            YourStore
+        </a>
+
+        <!-- Navigation Menu (Desktop) -->
+    <nav class="hidden md:flex space-x-6">
+    <a href="seller_dashboard" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Dashboard</a>
+    <a href="seller_orders" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Orders</a>
+    <a href="seller_catalogs" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Products</a>
+    <a href="seller_contact" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Contact Us</a>
+
+    {% if user.role == 'owner' %}
+    <a href="seller_morders" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">M_Orders</a>
+    <a href="seller_movies" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Movies</a>
+    <a href="seller_create" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Seller</a>
+    <a href="admin_create" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Admin</a>
+    {% endif %}
+
+    <a href="seller_settings" class="text-gray-700 hover:text-indigo-600 font-medium transition-colors duration-300 rounded-lg p-2">Settings</a>
+    </nav>
+
+
+        <!-- Seller Actions -->
+        <div class="flex items-center space-x-4">
+            <!-- Logout Button -->
+            <a href="/logout" class="bg-gray-200 text-gray-700 hover:bg-gray-300 font-medium py-2 px-4 rounded-lg transition-colors duration-300">
+                Logout
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2 text-gray-700 hover:text-indigo-600 transition-colors duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+                onclick="toggleMobileMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+<div id="mobile-menu" class="md:hidden bg-white mt-2 border-t border-gray-200 hidden">
+  <nav class="flex flex-col items-center py-4 space-y-2">
+    <a href="seller_dashboard" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Dashboard</a>
+    <a href="seller_orders" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Orders</a>
+    <a href="seller_catalogs" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Products</a>
+    <a href="seller_contact" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Contact Us</a>
+
+    {% if user.role == 'owner' %}
+    <a href="seller_morders" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">M_Orders</a>
+    <a href="seller_movies" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Movies</a>
+    <a href="seller_create" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Seller</a>
+    <a href="admin_create" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Admin</a>
+    {% endif %}
+
+    <a href="seller_settings" class="block text-gray-700 hover:text-indigo-600 font-medium p-2 w-full text-center">Settings</a>
+  </nav>
+</div>
+</header>
+
+<script>
+  function toggleMobileMenu() {
+    document.getElementById("mobile-menu").classList.toggle("hidden");
+  }
+</script>

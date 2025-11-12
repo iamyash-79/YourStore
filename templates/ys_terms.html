@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - YourStore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+
+    <!-- Main Content Area for Terms & Conditions -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Terms & Conditions</h1>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-4xl mx-auto">
+                <div class="prose max-w-none text-gray-700">
+                    <p class="text-lg leading-relaxed mb-6">
+                        Welcome to <span class="font-semibold text-indigo-600">YourStore</span>. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions of use. Please review these terms carefully. If you do not agree to these terms, you should not use this website.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">1. Acceptance of Terms</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        This Agreement ("Agreement") is between you and YourStore and governs your use of the YourStore website and services. By accessing or using the website, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">2. Changes to Terms</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        YourStore reserves the right to change, modify, add, or remove portions of these Terms and Conditions at any time. It is your responsibility to check these Terms and Conditions periodically for changes. Your continued use of the website following the posting of changes will mean that you accept and agree to the changes.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">3. Privacy Policy</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        Your use of YourStore is also governed by our Privacy Policy, which is incorporated into these Terms and Conditions by this reference. Please review our Privacy Policy to understand our practices.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">4. User Conduct</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        You agree to use the website only for lawful purposes. You are prohibited from posting on or transmitting through the website any unlawful, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, sexually explicit, profane, hateful, racially, ethnically, or otherwise objectionable material of any kind.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">5. Product Information and Pricing</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        YourStore strives to be as accurate as possible in the description of products. However, YourStore does not warrant that product descriptions or other content of this site is accurate, complete, reliable, current, or error-free. All prices are subject to change without notice.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">6. Intellectual Property</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        All content included on this site, such as text, graphics, logos, button icons, images, audio clips, digital downloads, data compilations, and software, is the property of YourStore or its content suppliers and protected by international copyright laws.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">7. Limitation of Liability</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        YourStore will not be liable for any damages of any kind arising from the use of this site, including, but not limited to direct, indirect, incidental, punitive, and consequential damages.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">8. Governing Law</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        These Terms and Conditions are governed by and construed in accordance with the laws of [Your Country/State], without regard to its conflict of law principles.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">9. Contact Information</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        If you have any questions about these Terms and Conditions, please contact us at <a href="mailto:support@yourstore.com" class="text-indigo-600 hover:underline">support@yourstore.com</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CgMovies</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+  function movieApp() {
+    return {
+      showEditModal: false,
+      editItem: {},
+      openEditModal(item) {
+        console.log('Opening edit modal:', item);
+        this.editItem = item;
+        this.showEditModal = true;
+      }
+    };
+  }
+</script>
+<script src="https://unpkg.com/alpinejs" defer></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a0aec0;
+    }
+    .modal {
+  display: none;
+  position: fixed;
+  z-index: 20;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 28px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+    .close-button:hover {
+      color: #333;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen" x-data="movieApp()">
+
+  {% include 'seller_topbar.html' %}
+
+  <main class="flex-grow py-20">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center mb-12">
+        <h1 class="text-3xl font-bold text-gray-800">movie movies</h1>
+
+        <button onclick="openModal('addmovieModal')" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700">
+          + Add New movie
+        </button>
+      </div>
+
+      <!-- movies List -->
+      <div id="movies-list" class="space-y-6">
+        {% for item in movie_items %}
+        <div class="flex flex-col sm:flex-row items-start sm:items-center bg-white border border-gray-300 rounded-lg p-4 shadow-sm">
+          <img src="{{ url_for('static', filename='uploads/' ~ item.images[0]) }}" alt="movie Image" class="w-24 h-24 object-cover rounded mr-4">
+          <div class="flex-grow mb-2 sm:mb-0">
+            <h3 class="text-xl font-semibold text-gray-800">{{ item.name }}</h3>
+            <p class="text-sm text-gray-600 mt-1">movie_id: - {{ item.id }}</p>
+            <p class="text-sm text-gray-600 mt-1">Price: ₹{{ item.price }}</p>
+            {% if item.created_at %}
+      <p class="text-sm text-gray-500 mt-1">🕒 Added on: {{ item.created_at }}</p>
+            {% endif %}
+            {% if item.discount_price %}
+              <p class="text-sm text-green-600 font-semibold">Discounted: ₹{{ item.discount_price }}</p>
+            {% endif %}
+          </div>
+          <div class="flex space-x-2 mt-3 sm:mt-0">
+            <form method="POST" action="{{ url_for('delete_movie', item_id=item.id) }}">
+              <button type="submit" onclick="return confirm('Delete this movie?')" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 text-sm">Delete</button>
+            </form>
+            <button @click='openEditModal({{ item | tojson | safe }})' class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 text-sm">Edit</button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+
+  <!-- Add movie Modal -->
+  <div id="addmovieModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal('addmovieModal')">&times;</span>
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Add New movie</h2>
+      <form action="{{ url_for('seller_movies') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">movie Name</label>
+          <input type="text" name="name" required class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Description</label>
+          <textarea name="description" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" rows="3"></textarea>
+        </div>
+        <!-- Inside Add movie Modal -->
+         <div>
+          <label class="block text-sm text-gray-700 mb-1">360p</label>
+          <input type="text" name="link1" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+         <div>
+          <label class="block text-sm text-gray-700 mb-1">480p</label>
+          <input type="text" name="link2" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+         <div>
+          <label class="block text-sm text-gray-700 mb-1">720p</label>
+          <input type="text" name="link3" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+         <div>
+          <label class="block text-sm text-gray-700 mb-1">1080p</label>
+          <input type="text" name="link4" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Price</label>
+          <input type="number" name="price" required class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Discounted Price</label>
+          <input type="number" name="discount_price" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+        <div>
+  <label class="block text-sm text-gray-700 mb-1">Visibility</label>
+  <select name="is_visible" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500">
+    <option value="1" selected>Yes (Show)</option>
+    <option value="0">No (Hide)</option>
+  </select>
+</div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Upload Images (1–5)</label>
+          <input type="file" name="images" accept="image/*" multiple required class="w-full" />
+        </div>
+        <button type="submit" onclick="this.disabled = true; this.innerText='Submitting...'; this.form.submit();" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded font-bold">Add movie</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit movie Modal -->
+  <div x-show="showEditModal" @keydown.escape.window="showEditModal = false" @click.outside="showEditModal = false" x-cloak x-transition class="modal flex">
+    <div class="modal-content">
+      <span class="close-button" @click="showEditModal = false">&times;</span>
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Edit movie</h2>
+      <form :action="`/edit_movie/${editItem.id}`" method="POST" enctype="multipart/form-data" class="space-y-4">
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">movie Name</label>
+          <input type="text" name="name" x-model="editItem.name" required class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Description</label>
+          <textarea name="description" x-model="editItem.description" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" rows="3"></textarea>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">360p</label>
+          <input type="text" name="link1" x-model="editItem.link1" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+         <div>
+           <label class="block text-sm text-gray-700 mb-1">480p</label>
+           <input type="text" name="link2" x-model="editItem.link2" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+         <div>
+          <label class="block text-sm text-gray-700 mb-1">720p</label>
+          <input type="text" name="link3" x-model="editItem.link3" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+         <div>
+          <label class="block text-sm text-gray-700 mb-1">1080p</label>
+          <input type="text" name="link4" x-model="editItem.link4" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+         </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Price</label>
+          <input type="number" name="price" x-model="editItem.price" required class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Discounted Price</label>
+          <input type="number" name="discount_price" x-model="editItem.discount_price" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500" />
+        </div>
+        <div>
+  <label class="block text-sm text-gray-700 mb-1">Visibility</label>
+  <select name="is_visible" x-model="editItem.is_visible" class="w-full border p-3 rounded focus:ring-2 ring-indigo-500">
+    <option value="1">Yes (Show)</option>
+    <option value="0">No (Hide)</option>
+  </select>
+</div>
+        <div>
+          <label class="block text-sm text-gray-700 mb-1">Replace Images (1–5)</label>
+          <input type="file" name="images" accept="image/*" multiple class="w-full" />
+        </div>
+        <button type="submit" onclick="this.disabled = true; this.innerText='Submitting...'; this.form.submit();" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded font-bold">Update movie</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+  </script>
+</body>
+</html>

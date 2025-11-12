@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YourStore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+  
+    <!-- Main Content Area for Categories -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Product Categories</h1>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Category Card 1 -->
+                <a href="#" class="block bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://placehold.co/600x400/e0e0e0/333333?text=Electronics" alt="Electronics Category" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="p-6 text-center">
+                        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">Electronics</h2>
+                        <p class="text-gray-600 text-sm mt-2">Smartphones, Laptops, Gadgets & more.</p>
+                    </div>
+                </a>
+
+                <!-- Category Card 2 -->
+                <a href="#" class="block bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://placehold.co/600x400/e0e0e0/333333?text=Apparel" alt="Apparel Category" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="p-6 text-center">
+                        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">Apparel</h2>
+                        <p class="text-gray-600 text-sm mt-2">Men's, Women's, Kids' fashion & accessories.</p>
+                    </div>
+                </a>
+
+                <!-- Category Card 3 -->
+                <a href="#" class="block bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://placehold.co/600x400/e0e0e0/333333?text=Home+Goods" alt="Home Goods Category" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="p-6 text-center">
+                        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">Home Goods</h2>
+                        <p class="text-gray-600 text-sm mt-2">Decor, Kitchen, Furniture & more.</p>
+                    </div>
+                </a>
+
+                <!-- Category Card 4 -->
+                <a href="#" class="block bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://placehold.co/600x400/e0e0e0/333333?text=Books" alt="Books Category" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="p-6 text-center">
+                        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">Books</h2>
+                        <p class="text-gray-600 text-sm mt-2">Fiction, Non-fiction, Textbooks & more.</p>
+                    </div>
+                </a>
+
+                <!-- Category Card 5 -->
+                <a href="#" class="block bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://placehold.co/600x400/e0e0e0/333333?text=Sports" alt="Sports Category" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="p-6 text-center">
+                        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">Sports & Outdoors</h2>
+                        <p class="text-gray-600 text-sm mt-2">Gear, Apparel, Camping & more.</p>
+                    </div>
+                </a>
+
+                <!-- Category Card 6 -->
+                <a href="#" class="block bg-white rounded-xl shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300 group">
+                    <img src="https://placehold.co/600x400/e0e0e0/333333?text=Toys" alt="Toys Category" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="p-6 text-center">
+                        <h2 class="text-xl font-semibold text-gray-800 group-hover:text-indigo-600 transition-colors duration-300">Toys & Games</h2>
+                        <p class="text-gray-600 text-sm mt-2">For all ages, puzzles, board games & more.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

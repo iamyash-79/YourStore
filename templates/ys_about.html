@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a0aec0;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 10;
+      right: 0;
+      top: 100%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .dropdown-menu a {
+      color: #343a40;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+    .dropdown-menu a:hover {
+      background-color: #f1f1f1;
+      color: #4f46e5;
+    }
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+
+  <!-- ✅ About Us Main Section -->
+  <main class="flex-grow py-16 md:py-20">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">About Us</h1>
+
+      <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-4xl mx-auto">
+        <div class="prose max-w-none text-gray-700">
+          <p class="text-lg leading-relaxed mb-6">
+            Welcome to <span class="font-semibold text-indigo-600">YourStore</span>, your ultimate destination for high-quality products and an unparalleled shopping experience. Founded in 2025, our mission is to bring you a curated selection of items that combine style, functionality, and affordability.
+          </p>
+          <p class="text-lg leading-relaxed mb-6">
+            At YourStore, we believe in the power of choice and the joy of discovery. We meticulously hand-pick every product, ensuring it meets our rigorous standards for quality and design.
+          </p>
+          <p class="text-lg leading-relaxed mb-6">
+            Our commitment extends beyond just products. We are dedicated to providing exceptional customer service, making your shopping journey as smooth and enjoyable as possible.
+          </p>
+          <p class="text-lg leading-relaxed mb-6">
+            Thank you for choosing YourStore. We are thrilled to have you as part of our growing community.
+          </p>
+          <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Our Vision</h2>
+          <p class="text-lg leading-relaxed mb-6">
+            To become the most trusted and beloved online shopping destination, known for our diverse product range, commitment to quality, and outstanding customer satisfaction.
+          </p>
+          <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Our Values</h2>
+          <ul class="list-disc list-inside text-lg leading-relaxed space-y-2">
+            <li><span class="font-semibold">Customer Centricity:</span> Our customers are at the heart of everything we do.</li>
+            <li><span class="font-semibold">Quality Assurance:</span> We are committed to offering only the best products.</li>
+            <li><span class="font-semibold">Integrity:</span> We operate with honesty and transparency.</li>
+            <li><span class="font-semibold">Innovation:</span> We continuously seek new ways to improve your shopping experience.</li>
+            <li><span class="font-semibold">Community:</span> We believe in building a strong, supportive community around our brand.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+  <script>
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

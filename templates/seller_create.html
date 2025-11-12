@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #f9fafb;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+    .close-button {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #888;
+    }
+    .close-button:hover {
+      color: black;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  {% include 'seller_topbar.html' %}
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Seller Management</h1>
+      <button onclick="openModal()" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">➕ Add Seller</button>
+    </div>
+
+    <div class="bg-white shadow rounded-lg p-4">
+      <table class="w-full table-auto text-left text-sm">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-4 py-2">S.No.</th>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Email</th>
+            <th class="px-4 py-2">Contact</th>
+            <th class="px-4 py-2">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y">
+          {% for seller in admins %}
+          <tr>
+            <td class="px-4 py-2">{{ loop.index }}</td>
+            <td class="px-4 py-2">{{ seller.full_name }}</td>
+            <td class="px-4 py-2">{{ seller.email }}</td>
+            <td class="px-4 py-2">{{ seller.contact }}</td>
+            <td class="px-4 py-2">
+              <form method="POST" action="{{ url_for('delete_seller', seller_id=seller.id) }}" onsubmit="return confirm('Are you sure?');">
+                <button type="submit" class="text-red-600 hover:text-red-800">🗑️ Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Add Seller Modal -->
+  <div id="sellerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" onclick="closeModal()">&times;</span>
+      <h2 class="text-xl font-semibold mb-4">Add New Seller</h2>
+
+      <form method="POST" action="{{ url_for('seller_create') }}" id="seller-form" class="space-y-4">
+        <div>
+          <label class="block mb-1 font-medium">Full Name</label>
+          <input type="text" name="full_name" required class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div>
+          <label class="block mb-1 font-medium">Email</label>
+          <div class="flex gap-2">
+            <input type="email" name="email" id="seller_email" required class="flex-1 border rounded px-3 py-2" />
+            <button type="button" onclick="sendSellerOTP(this)" class="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">Send OTP</button>
+          </div>
+        </div>
+
+        <div id="seller-otp-section" style="display: none;">
+          <label class="block mb-1 mt-2 font-medium">Enter OTP</label>
+          <div class="flex gap-2">
+            <input type="text" name="otp" id="seller_otp" placeholder="6-digit OTP" class="flex-1 border rounded px-3 py-2" />
+            <button type="button" onclick="verifySellerOTP()" class="bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700">Verify</button>
+          </div>
+          <p id="seller-otp-msg" class="text-sm mt-1 text-gray-600"></p>
+        </div>
+
+        <div>
+          <label class="block mb-1 font-medium">Contact</label>
+          <input type="text" name="contact" required class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <div>
+          <label class="block mb-1 font-medium">Address</label>
+          <input type="text" name="address" required class="w-full border rounded px-3 py-2" />
+        </div>
+
+        <button type="submit" id="sellerSubmitBtn" class="w-full bg-indigo-600 text-white px-4 py-2 rounded mt-4 hover:bg-indigo-700" disabled>
+          ✅ Submit
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("sellerModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("sellerModal").style.display = "none";
+    }
+
+    function sendSellerOTP(btn) {
+      const email = document.getElementById("seller_email").value.trim();
+      const msg = document.getElementById("seller-otp-msg");
+
+      if (!email) return alert("Please enter an email first.");
+
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+
+      fetch("/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, mode: "create" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById("seller-otp-section").style.display = "block";
+          msg.textContent = "✅ OTP sent. Check email.";
+          msg.style.color = "green";
+        } else {
+          msg.textContent = "❌ " + data.message;
+          msg.style.color = "red";
+        }
+      })
+      .catch(err => {
+        msg.textContent = "❌ Network or server error.";
+        msg.style.color = "red";
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = "Send OTP";
+      });
+    }
+
+    function verifySellerOTP() {
+      const otp = document.getElementById("seller_otp").value.trim();
+      const msg = document.getElementById("seller-otp-msg");
+      const submitBtn = document.getElementById("sellerSubmitBtn");
+
+      if (!otp) return alert("Enter the OTP.");
+
+      fetch("/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ otp, mode: "create" })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.verified) {
+          msg.textContent = "✅ OTP Verified!";
+          msg.style.color = "green";
+          submitBtn.disabled = false;
+        } else {
+          msg.textContent = "❌ " + (data.message || "Invalid OTP.");
+          msg.style.color = "red";
+        }
+      })
+      .catch(err => {
+        msg.textContent = "❌ Verification failed.";
+        msg.style.color = "red";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Website Policies – Yash Cyber Cafe</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- ✅ Header -->
+  {% include 'user_topbar.html' %}
+
+  <!-- ✅ Main Content -->
+  <main class="flex-grow py-16 px-6 md:px-10">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8 border border-gray-200">
+      <h1 class="text-3xl font-bold text-indigo-700 mb-6 text-center">📄 Website Policies & Info</h1>
+      <p class="text-gray-600 mb-10 text-center">Find all essential information, policies, and contact options here.</p>
+
+      <div class="grid gap-6 sm:grid-cols-2">
+
+        <a href="/ys_privacy" class="block bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl p-6 shadow text-indigo-800 transition text-center">
+          🔒 Privacy Policy
+        </a>
+
+        <a href="/ys_refund" class="block bg-green-50 hover:bg-green-100 border border-green-200 rounded-xl p-6 shadow text-green-800 transition text-center">
+          💸 Refund & Cancellation Policy
+        </a>
+
+        <a href="/ys_terms" class="block bg-yellow-50 hover:bg-yellow-100 border border-yellow-200 rounded-xl p-6 shadow text-yellow-800 transition text-center">
+          📜 Terms & Conditions
+        </a>
+
+        <a href="/user_contact" class="block bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl p-6 shadow text-blue-800 transition text-center">
+          📞 Contact Information
+        </a>
+
+        <a href="/ys_shipping" class="block bg-pink-50 hover:bg-pink-100 border border-pink-200 rounded-xl p-6 shadow text-pink-800 transition text-center">
+          📦 Shipping Policy
+        </a>
+
+        <a href="/ys_faq" class="block bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl p-6 shadow text-purple-800 transition text-center">
+          ❓ Frequently Asked Questions
+        </a>
+
+        <a href="/ys_about" class="block bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-xl p-6 shadow text-gray-800 transition text-center">
+          ℹ️ About Us
+        </a>
+
+      </div>
+
+      <p class="text-sm text-gray-500 mt-10 text-center">
+        For any help or queries, email us at 
+        <a href="mailto:yashcybercafeofficial@gmail.com" class="text-blue-600 hover:underline">yashcybercafeofficial@gmail.com</a>
+      </p>
+    </div>
+  </main>
+
+    {% include 'user_footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Database Viewer</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+    nav { background: #333; padding: 10px; margin-bottom: 20px; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    section { margin-bottom: 50px; }
+    h2 { background: #333; color: white; padding: 10px; margin: 0 -20px 10px; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #eee; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">Database Viewer</h1>
+
+  <nav>
+    <a href="#users">Users</a>
+    <a href="#orders">Orders</a>
+    <a href="#products">Products</a>
+    <a href="#admins">Admins</a>
+    <a href="#cart">Cart</a>
+  </nav>
+
+  {% for table_name, rows in data.items() %}
+  <section id="{{ table_name }}">
+    <h2>{{ table_name.capitalize() }} Table</h2>
+    {% if rows %}
+    <table>
+      <thead>
+        <tr>
+          {% for col in rows[0].keys() %}
+          <th>{{ col }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          {% for val in row.values() %}
+          <td>{{ val }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No data available in {{ table_name }} table.</p>
+    {% endif %}
+  </section>
+  {% endfor %}
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!-- ✅ Desktop Topbar (Updated) -->
+<header class="bg-white shadow-sm py-4 relative z-50 md:block hidden">
+  <div class="container mx-auto px-4 flex justify-between items-center">
+
+    <!-- 🔹 Left: Logo -->
+    <a href="/" class="text-2xl font-bold text-indigo-600 hover:text-indigo-700 transition-colors">
+      YourStore
+    </a>
+
+    <!-- 🔹 Center: Navigation -->
+    <nav class="space-x-6 flex justify-center">
+      <a href="/" class="text-gray-700 hover:text-indigo-600 font-medium">Home</a>
+      <a href="/user_shop" class="text-gray-700 hover:text-indigo-600 font-medium">Shop</a>
+      <a href="/user_shop" class="text-gray-700 hover:text-indigo-600 font-medium">Categories</a>
+      <a href="/user_orders" class="text-gray-700 hover:text-indigo-600 font-medium">My Orders</a>
+    </nav>
+
+    <!-- 🔹 Right: Search + User -->
+    <div class="flex items-center space-x-4">
+      <!-- Search Box -->
+      <form action="/user_shop" method="GET" class="w-48">
+        <input type="text" name="q" placeholder="Search..."
+               value="{{ query if query else '' }}"
+               class="w-full px-4 py-1.5 rounded-full border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+      </form>
+
+      <!-- User -->
+      {% if user %}
+      <div class="relative dropdown">
+        <img src="{{ url_for('static', filename='images/' + (user.image if user.image else 'default_male.png')) }}"
+             alt="Profile" class="w-9 h-9 rounded-full border-2 border-indigo-500 shadow cursor-pointer" id="dropdownButton">
+        <div id="userDropdown" class="absolute right-0 mt-2 w-40 bg-white border rounded shadow-md hidden z-50">
+          <a href="/user_account" class="block px-4 py-2 hover:bg-indigo-100">👤 My Profile</a>
+          <a href="#" onclick="handleCartClick()" class="block px-4 py-2 hover:bg-indigo-100">🛒 Cart</a>
+          <a href="/user_settings" class="block px-4 py-2 hover:bg-indigo-100">⚙️ Settings</a>
+          <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-red-100">🚪 Logout</a>
+        </div>
+      </div>
+      {% else %}
+      <button onclick="document.getElementById('loginModal').classList.remove('hidden')"
+              class="bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition">
+        Login
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<!-- ✅ Mobile Topbar -->
+<div class="fixed top-0 left-0 w-full flex items-center justify-between px-3 py-2 bg-white shadow md:hidden z-50 space-x-3">
+  <!-- Profile Icon -->
+  {% if user %}
+  <a href="/mobile_settings">
+    <img src="{{ url_for('static', filename='images/' + (user.image if user.image else 'default_male.png')) }}"
+         alt="Profile" class="w-9 h-9 rounded-full border-2 border-indigo-500 shadow" />
+  </a>
+  {% else %}
+  <button onclick="document.getElementById('loginModal').classList.remove('hidden')">
+    <img src="{{ url_for('static', filename='images/default_male.png') }}"
+         alt="Login" class="w-9 h-9 rounded-full border-2 border-indigo-500 shadow" />
+  </button>
+  {% endif %}
+
+  <!-- Search Bar -->
+  <form action="/user_shop" method="GET" class="flex-grow mx-2">
+    <input type="text" name="q" placeholder="Search products..."
+           value="{{ query if query else '' }}"
+           class="w-full px-3 py-1.5 rounded-full border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+  </form>
+
+  <!-- Cart Icon -->
+  <button onclick="handleCartClick()" class="text-gray-800 text-2xl">
+  🛒
+</button>
+</div>
+
+<!-- ✅ Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center hidden z-50">
+  <div class="bg-white rounded-lg shadow-lg px-6 py-8 w-full max-w-sm relative">
+    <button onclick="document.getElementById('loginModal').classList.add('hidden')"
+            class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl font-bold">&times;</button>
+
+    <h2 class="text-xl font-semibold text-indigo-600 mb-6 text-center">Login via OTP</h2>
+
+    <form method="POST" onsubmit="return false;" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input type="email" id="loginEmail" required
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"/>
+      </div>
+
+      <div>
+        <button type="button" id="sendOtpBtn" onclick="sendLoginOTP()"
+                class="w-full bg-indigo-500 text-white font-medium px-4 py-2 rounded hover:bg-indigo-600 transition">
+          Send OTP
+        </button>
+      </div>
+
+      <div id="otpSection" class="hidden space-y-3">
+        <label class="block text-sm font-medium text-gray-700">Enter OTP</label>
+        <input type="text" id="loginOtpInput"
+               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+               placeholder="6-digit OTP" />
+        <button type="button" onclick="verifyLoginOTP()"
+                class="w-full bg-green-500 text-white font-medium px-4 py-2 rounded hover:bg-green-600 transition">
+          Verify & Login
+        </button>
+      </div>
+
+      <p id="otpTimer" class="text-sm text-yellow-600 hidden text-center mt-2"></p>
+    </form>
+  </div>
+</div>
+
+<!-- ✅ Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="fixed top-16 left-0 right-0 mx-auto max-w-md px-4 z-50">
+      {% for category, msg in messages %}
+        <div class="mb-3 p-3 text-center text-white rounded
+            {% if category == 'success' %}bg-green-500
+            {% elif category == 'error' %}bg-red-500
+            {% else %}bg-yellow-500{% endif %}">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- ✅ Login Check Global -->
+<script>
+  const IS_LOGGED_IN = {{ 'true' if user else 'false' }};
+</script>
+
+<!-- ✅ Scripts -->
+<script>
+  function handleCartClick() {
+    if (!IS_LOGGED_IN) {
+      document.getElementById("loginModal").classList.remove("hidden");
+    } else {
+      window.location.href = "/user_cart";
+    }
+  }
+
+  // Desktop dropdown logic
+  const dropdown = document.getElementById('userDropdown');
+  const button = document.getElementById('dropdownButton');
+  let dropdownTimeout;
+
+  if (button && dropdown) {
+    button.addEventListener('mouseenter', () => {
+      clearTimeout(dropdownTimeout);
+      dropdown.classList.remove('hidden');
+    });
+    button.addEventListener('mouseleave', () => {
+      dropdownTimeout = setTimeout(() => dropdown.classList.add('hidden'), 200);
+    });
+    dropdown.addEventListener('mouseenter', () => clearTimeout(dropdownTimeout));
+    dropdown.addEventListener('mouseleave', () => {
+      dropdownTimeout = setTimeout(() => dropdown.classList.add('hidden'), 200);
+    });
+  }
+
+  // OTP logic
+  let otpInterval;
+  function sendLoginOTP() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const sendBtn = document.getElementById("sendOtpBtn");
+    if (!email) return alert("Please enter your email.");
+    sendBtn.disabled = true;
+    sendBtn.textContent = "Sending...";
+    fetch("/send-user-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert("✅ OTP sent.");
+        document.getElementById("otpSection").classList.remove("hidden");
+        startOtpTimer();
+      } else {
+        alert(data.message || "Failed to send OTP.");
+      }
+    })
+    .finally(() => {
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Send OTP";
+    });
+  }
+
+  function verifyLoginOTP() {
+    const email = document.getElementById("loginEmail").value.trim();
+    const otp = document.getElementById("loginOtpInput").value.trim();
+    if (!otp) return alert("Please enter the OTP.");
+    fetch("/verify-user-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.verified) {
+        alert("🎉 Login successful!");
+        window.location.href = "/user_shop";
+      } else {
+        alert(data.message || "Incorrect OTP.");
+      }
+    });
+  }
+
+  function startOtpTimer() {
+    const timerEl = document.getElementById("otpTimer");
+    let sec = 300;
+    timerEl.classList.remove("hidden");
+    clearInterval(otpInterval);
+    otpInterval = setInterval(() => {
+      if (sec <= 0) {
+        clearInterval(otpInterval);
+        timerEl.classList.add("hidden");
+        return;
+      }
+      const m = Math.floor(sec / 60), s = sec % 60;
+      timerEl.textContent = `⏳ OTP valid for ${m}:${s.toString().padStart(2, '0')}`;
+      sec--;
+    }, 1000);
+  }
+</script>

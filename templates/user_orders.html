@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+      right: 0;
+      top: 100%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .dropdown-menu a {
+      color: #343a40;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-menu a:hover {
+      background-color: #f1f1f1;
+      color: #4f46e5;
+    }
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+  {% include 'user_topbar.html' %}
+
+  <main class="flex-grow py-10 mt-4">
+    <div class="container mx-auto px-4">
+
+      <!-- Header and Help Button -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
+        <a href="/user_contact"
+           class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg text-sm shadow">
+          🛈 Help
+        </a>
+      </div>
+
+      {% if user_orders %}
+      <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="p-4 sm:p-6 space-y-6">
+          {% for order in user_orders %}
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-200 pb-5 last:border-none">
+
+            <!-- Image + Product Info -->
+            <div class="flex items-start gap-4 w-full sm:w-auto">
+              <div class="w-20 h-20 flex-shrink-0 rounded bg-gray-100 overflow-hidden">
+                <img src="{{ url_for('static', filename='uploads/products/' + order.image) }}"
+                     alt="Product Image"
+                     class="w-full h-full object-contain" />
+              </div>
+
+              <div>
+                <h2 class="text-lg font-semibold text-gray-800">Order #{{ order.id }}</h2>
+                <p class="text-sm text-gray-600">{{ order.item_name }}</p>
+                <p class="text-sm text-gray-600">Qty: {{ order.quantity or 1 }}</p>
+              </div>
+            </div>
+
+            <!-- Order Details -->
+            <div class="text-left sm:text-right w-full sm:w-auto">
+              <p class="text-sm text-gray-600">
+                Order Date:
+                {% if order.created_at_obj.__class__.__name__ == 'datetime' %}
+                  {{ order.created_at_obj.strftime('%b %d, %Y') }}
+                {% else %}
+                  {{ order.created_at_obj }}
+                {% endif %}
+              </p>
+
+              <p class="text-gray-700 font-medium mt-1">
+                Total:
+                <span class="text-indigo-600 text-xl font-bold">₹{{ order.amount }}</span>
+              </p>
+
+              <p class="text-gray-700 mt-1">
+                Status:
+                <span class="font-semibold
+                  {% if order.status == 'delivered' %}text-green-600
+                  {% elif order.status == 'cancelled' %}text-red-600
+                  {% elif order.status == 'pending' %}text-yellow-600
+                  {% else %}text-blue-600{% endif %}">
+                  {{ order.status.capitalize() }}
+                </span>
+              </p>
+
+              <a href="{{ url_for('user_order_details', order_id=order.id) }}"
+                 class="mt-3 inline-block bg-indigo-500 text-white py-2 px-4 rounded-full hover:bg-indigo-600 transition text-sm">
+                View Details
+              </a>
+            </div>
+
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% else %}
+      <!-- No Orders Message -->
+      <div class="text-center py-16">
+        <p class="text-gray-600 text-lg mb-4">Login to see your personal Order History.</p>
+        <a href="{{ url_for('user_shop') }}"
+           class="inline-block bg-indigo-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg hover:bg-indigo-700 transition">
+          Start Shopping
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <!-- Footer -->
+  {% include 'user_footer.html' %}
+
+</body>
+</html>

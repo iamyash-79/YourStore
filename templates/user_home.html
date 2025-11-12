@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YourStore - Discover Premium Products at Best Prices</title>
+
+  <!-- ✅ Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}?v=2">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- ✅ Tailwind & Alpine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <!-- ✅ Custom Styling -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+      overflow-x: hidden;
+    }
+
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a0aec0;
+    }
+
+    /* Product Card */
+    .product-card {
+      transition: all 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Hero Gradient */
+    .hero-gradient {
+      background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen" x-data="homePage">
+
+  <!-- ✅ Header -->
+  {% include 'user_topbar.html' %}
+
+  <!-- ✅ Hero Section -->
+  <section class="hero-gradient py-16 md:py-20 text-center rounded-b-3xl shadow-md mt-4 max-w-7xl mx-auto w-full px-4">
+    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 md:mb-6 leading-tight">
+      Discover Your Next Favorite Thing
+    </h1>
+    <p class="text-base md:text-lg text-gray-600 mb-6 md:mb-8 max-w-2xl mx-auto">
+      Explore our curated collection of high-quality products, hand-picked just for you.
+    </p>
+    <a href="/user_shop"
+       class="bg-indigo-600 text-white font-semibold py-3 px-8 rounded-full text-lg shadow-md hover:bg-indigo-700 hover:scale-105 transform transition-all">
+       Shop Now
+    </a>
+  </section>
+
+  <!-- ✅ Product Section -->
+  <section class="py-12 md:py-16 px-4 max-w-7xl mx-auto w-full">
+    <h2 class="text-2xl md:text-4xl font-bold text-center text-gray-800 mb-10 md:mb-12">
+      Featured Products
+    </h2>
+
+    <!-- Responsive Product Grid -->
+    <div class="flex md:flex-wrap gap-5 overflow-x-auto md:overflow-visible pb-6 -mx-4 px-4 md:mx-0 justify-center">
+      {% for item in product_items[:5] %}
+      <a href="{{ url_for('user_products_details', product_id=item.id) }}"
+         class="product-card inline-block bg-white rounded-xl shadow-sm hover:shadow-lg overflow-hidden w-48 md:w-[calc(20%-1rem)] flex-shrink-0">
+        <div class="relative w-full" style="padding-top: 100%; background-color: #f3f4f6;">
+          <img src="{{ url_for('static', filename='uploads/products/' ~ item.images[0]) if item.images else 'https://placehold.co/400x400?text=No+Image' }}"
+               alt="{{ item.name }}"
+               class="absolute inset-0 w-full h-full object-contain p-4">
+        </div>
+        <div class="p-3 md:p-4">
+          <h3 class="text-sm md:text-base font-semibold text-gray-800 truncate mb-1">
+            {{ item.name }}
+          </h3>
+          {% if item.discount_price and item.discount_price | float > 0 %}
+          <div>
+            <span class="line-through text-red-500 text-xs md:text-sm">₹{{ item.price }}</span>
+            <span class="text-base md:text-lg font-bold text-green-600 ml-1">₹{{ item.discount_price }}</span>
+          </div>
+          {% else %}
+          <div class="text-base md:text-lg font-bold text-indigo-600">₹{{ item.price }}</div>
+          {% endif %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if product_items|length > 5 %}
+    <div class="text-center mt-8">
+      <a href="/user_shop"
+         class="bg-indigo-600 text-white px-6 py-2.5 rounded-full hover:bg-indigo-700 transition text-sm md:text-base font-medium shadow">
+         View More
+      </a>
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- ✅ Footer -->
+  {% include 'user_footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>YourStore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 md:hidden">
+
+  <!-- ✅ Back Button -->
+  <div class="w-full flex items-center justify-between p-4 bg-white shadow sticky top-0 z-50">
+    <a href="/user_shop" class="text-indigo-600 font-semibold flex items-center">
+      <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Back
+    </a>
+    <span class="text-gray-700 font-semibold">Settings</span>
+    <span class="w-5 h-5"></span> <!-- spacer to center text -->
+  </div>
+
+  <div class="min-h-screen flex flex-col items-center justify-start p-6 space-y-6">
+
+    <!-- ✅ Profile Info -->
+    <div class="w-full flex items-center bg-white rounded-xl shadow px-5 py-4 space-x-4">
+      <img src="{{ url_for('static', filename='images/' + (user.image if user and user.image else 'default_male.png')) }}"
+           alt="Profile"
+           class="w-16 h-16 rounded-full object-cover border-2 border-indigo-500 shadow">
+      <div>
+        <h2 class="text-lg font-bold text-gray-800">{{ user.full_name }}</h2>
+        <p class="text-gray-600 text-sm">📞 {{ user.contact }}</p>
+      </div>
+    </div>
+
+    <!-- ✅ Menu Buttons -->
+    <div class="w-full space-y-3 mt-4">
+      <a href="/user_account" class="block w-full border border-gray-300 bg-white hover:bg-gray-50 text-black font-medium py-3 px-4 rounded-lg text-center shadow-sm">
+        👤 My Profile
+      </a>
+
+      <a href="/user_settings" class="block w-full border border-gray-300 bg-white hover:bg-gray-50 text-black font-medium py-3 px-4 rounded-lg text-center shadow-sm">
+        ⚙️ Settings
+      </a>
+
+      <a href="/logout" class="block w-full border border-gray-300 bg-white hover:bg-red-50 text-red-600 font-medium py-3 px-4 rounded-lg text-center shadow-sm">
+        🚪 Logout
+      </a>
+    </div>
+
+  </div>
+
+</body>
+</html>

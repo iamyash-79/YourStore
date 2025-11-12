@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scan to Visit Our Sites</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    .a4-page {
+      width: 210mm;
+      height: 297mm;
+      padding: 25mm;
+      background-color: white;
+      margin: auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .qr-code-container canvas {
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media print {
+      .qr-section:not(:last-child)::after {
+        content: "";
+        display: block;
+        height: 30px;
+      }
+      .a4-page {
+        box-shadow: none !important;
+        border: none !important;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .a4-page {
+        width: 100%;
+        height: auto;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body class="flex justify-center items-start min-h-screen p-4 bg-gray-100">
+
+  <div class="a4-page shadow-lg border border-gray-200 rounded-xl w-full">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">📱 Scan to Visit Our Sites</h1>
+      <p class="text-gray-600 text-sm mt-1">Direct access to our digital platforms</p>
+    </div>
+
+    <!-- QR Codes Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
+
+  <!-- YourStore -->
+  <a href="https://yourstore.pythonanywhere.com" target="_blank" class="block transform transition hover:scale-105">
+    <div class="bg-white p-4 sm:p-6 border border-gray-200 rounded-xl shadow-md hover:shadow-green-400 transition cursor-pointer">
+      <div class="flex items-center justify-center text-gray-800 mb-2">
+        <span class="text-2xl mr-2">🛒</span>
+        <h2 class="text-xl font-bold">YourStore</h2>
+      </div>
+      <div id="qr1" class="qr-code-container w-40 h-40 mx-auto mb-3 p-2 border rounded-lg bg-white"></div>
+      <p class="text-sm text-gray-600">Shop & Services Platform</p>
+    </div>
+  </a>
+
+  <!-- MoviesHub -->
+  <a href="https://yourstore.pythonanywhere.com/movieshub" target="_blank" class="block transform transition hover:scale-105">
+    <div class="bg-white p-4 sm:p-6 border border-gray-200 rounded-xl shadow-md hover:shadow-blue-400 transition cursor-pointer">
+      <div class="flex items-center justify-center text-gray-800 mb-2">
+        <span class="text-2xl mr-2">🎬</span>
+        <h2 class="text-xl font-bold">CG Movies</h2>
+      </div>
+      <div id="qr2" class="qr-code-container w-40 h-40 mx-auto mb-3 p-2 border rounded-lg bg-white"></div>
+      <p class="text-sm text-gray-600">Watch CG Movies Online</p>
+    </div>
+  </a>
+
+  <!-- DigiYash -->
+  <a href="https://digiyash.pythonanywhere.com" target="_blank" class="block transform transition hover:scale-105">
+    <div class="bg-white p-4 sm:p-6 border border-gray-200 rounded-xl shadow-md hover:shadow-purple-400 transition cursor-pointer">
+      <div class="flex items-center justify-center text-gray-800 mb-2">
+        <span class="text-2xl mr-2">💻</span>
+        <h2 class="text-xl font-bold">DigiYash</h2>
+      </div>
+      <div id="qr3" class="qr-code-container w-40 h-40 mx-auto mb-3 p-2 border rounded-lg bg-white"></div>
+      <p class="text-sm text-gray-600">Digital Web Portal</p>
+    </div>
+  </a>
+
+</div>
+
+    <!-- Footer -->
+    <div class="text-center mt-10 text-gray-500 text-sm">
+      Printed by Yash Cyber Café • Need help? Visit us or call 📞
+    </div>
+
+  </div>
+
+  <script>
+    window.onload = function () {
+      new QRCode(document.getElementById("qr1"), {
+        text: "https://yourstore.pythonanywhere.com",
+        width: 180,
+        height: 180,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      new QRCode(document.getElementById("qr2"), {
+        text: "https://yourstore.pythonanywhere.com/movieshub",
+        width: 180,
+        height: 180,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+      new QRCode(document.getElementById("qr3"), {
+        text: "https://digiyash.pythonanywhere.com",
+        width: 180,
+        height: 180,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    };
+  </script>
+
+</body>
+</html>

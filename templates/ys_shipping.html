@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping and Delivery - YourStore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+  
+    <!-- Main Content Area for Shipping and Delivery -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Shipping & Delivery</h1>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-4xl mx-auto">
+                <div class="prose max-w-none text-gray-700">
+                    <p class="text-lg leading-relaxed mb-6">
+                        At <span class="font-semibold text-indigo-600">YourStore</span>, we are committed to providing you with a seamless shopping experience, which includes reliable and efficient shipping and delivery services.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Shipping Methods & Times</h2>
+                    <p class="text-lg leading-relaxed mb-4">
+                        We offer various shipping methods to meet your needs. The estimated delivery times and costs will vary depending on your location and the selected shipping option at checkout.
+                    </p>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-2 mb-6">
+                        <li><span class="font-semibold">Standard Shipping:</span> Estimated delivery within 5-7 business days.</li>
+                        <li><span class="font-semibold">Express Shipping:</span> Estimated delivery within 2-3 business days.</li>
+                        <li><span class="font-semibold">Local Pickup:</span> Available for select items at our designated pickup points. (Please check product pages for eligibility.)</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Shipping Costs</h2>
+                    <p class="text-lg leading-relaxed mb-4">
+                        Shipping costs are calculated based on the weight, dimensions, and destination of your order. You can view the exact shipping cost for your order during the checkout process before finalizing your purchase.
+                    </p>
+                    <p class="text-lg leading-relaxed mb-6">
+                        We occasionally offer free shipping promotions. Keep an eye on our homepage or subscribe to our newsletter for updates on special offers!
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Order Processing Time</h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        Orders are typically processed and dispatched within 1-2 business days (Monday-Friday, excluding public holidays) after payment confirmation. You will receive a shipping confirmation email with tracking information once your order has been dispatched.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Tracking Your Order</h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        Once your order is shipped, you will receive an email with a tracking number and a link to track your package's journey. You can also track your order directly from your "My Orders" page after logging into your account.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">International Shipping</h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        We currently ship to a limited number of international destinations. Please check the shipping options available at checkout for your country. International customers are responsible for any customs duties, taxes, or fees imposed by their respective countries.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">Damaged or Lost Packages</h2>
+                    <p class="text-lg leading-relaxed mb-6">
+                        While we take utmost care in packaging and shipping your items, unforeseen circumstances can occur. If your package arrives damaged or is lost in transit, please contact our customer support team immediately at <a href="mailto:support@yourstore.com" class="text-indigo-600 hover:underline">support@yourstore.com</a>. We will work diligently to resolve the issue for you.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

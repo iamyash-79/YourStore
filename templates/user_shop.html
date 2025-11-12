@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YouStore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+    }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a0aec0; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 10;
+      right: 0;
+      top: 100%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  {% include 'user_topbar.html' %}
+
+  <main class="flex-grow py-8 mt-4">
+    <div class="container mx-auto px-4">
+
+      <!-- 🔍 Search Result Text -->
+      {% if query %}
+        <div class="text-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-800">
+            Results for "<span class="text-indigo-600">{{ query }}</span>"
+          </h2>
+          {% if product_items|length == 0 %}
+            <p class="text-red-600 mt-1">No products found.</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <!-- 🛒 Products Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4">
+        {% for item in product_items %}
+        <a href="{{ url_for('user_products_details', product_id=item.id) }}" class="bg-white rounded-xl shadow hover:shadow-md overflow-hidden transition block">
+          <div class="relative w-full pt-[100%] bg-gray-100">
+            <img src="{{ url_for('static', filename='uploads/products/' ~ item.images[0]) if item.images else 'https://placehold.co/400x400?text=No+Image' }}"
+                 alt="{{ item.name }}"
+                 class="absolute top-0 left-0 w-full h-full object-contain p-2" />
+          </div>
+          <div class="p-2 text-center">
+            <h3 class="text-sm font-medium text-gray-800 truncate">{{ item.name }}</h3>
+            {% if item.discount_price and item.discount_price > 0 %}
+              <div>
+                <span class="text-xs line-through text-red-500">₹{{ item.price }}</span>
+                <span class="text-sm font-bold text-indigo-600 ml-1">₹{{ item.discount_price }}</span>
+              </div>
+            {% else %}
+              <div class="text-sm font-bold text-indigo-600">₹{{ item.price }}</div>
+            {% endif %}
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </main>
+
+  <!-- 📦 Spacing before footer -->
+  <div class="h-10"></div>
+
+  <!-- ✅ Footer -->
+  {% include 'user_footer.html' %}
+
+</body>
+</html>

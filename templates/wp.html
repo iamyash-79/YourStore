@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoviesHub Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ece5dd;
+      height: 100vh;
+      overflow: hidden; /* Extra scroll hata do */
+    }
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+    }
+    .chat-header {
+      background: #075E54;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .chat-box {
+      flex: 1;
+      padding: 20px;
+      background: url('static/images/whatsapp.jpg');
+      background-size: cover;
+      overflow-y: auto;
+    }
+    .fixed-message {
+      text-align: center;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #dcf8c6;
+      border-radius: 8px;
+      display: inline-block;
+      font-size: 14px;
+      font-style: italic;
+      color: #333;
+    }
+    /* ✅ Sticky Input Box */
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      background: #f0f0f0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
+      outline: none;
+    }
+    .chat-input button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      background: #075E54;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .chat-input button:hover {
+      background: #128C7E;
+    }
+    /* ✅ Chat area ko input box ke liye space do */
+    .chat-box {
+      margin-bottom: 60px; /* input box height ke liye space */
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">Hello</div>
+    <div class="chat-box">
+      <div class="fixed-message">Hey! Type your massage below 👇</div>
+    </div>
+    <div class="chat-input">
+      <input id="message" type="text" placeholder="Type a message" />
+      <button onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const msg = document.getElementById('message').value.trim();
+      if (msg !== "") {
+        const whatsappURL = `https://wa.me/919201643259?text=${encodeURIComponent(msg)}`;
+        window.open(whatsappURL, '_blank');
+        document.getElementById('message').value = "";
+      }
+    }
+  </script>
+</body>
+</html>

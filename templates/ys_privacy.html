@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - YourStore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa; /* Light background */
+            color: #343a40; /* Dark text for contrast */
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* Light gray */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* Slightly darker gray on hover */
+        }
+        /* Styles for the account dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            right: 0;
+            top: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .dropdown-menu a {
+            color: #343a40;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+            color: #4f46e5;
+        }
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- ✅ Header Include -->
+  {% include 'user_topbar.html' %}
+
+    <!-- Main Content Area for Privacy Policy -->
+    <main class="flex-grow py-16 md:py-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Privacy Policy</h1>
+
+            <div class="bg-white rounded-xl shadow-md overflow-hidden p-8 max-w-4xl mx-auto">
+                <div class="prose max-w-none text-gray-700">
+                    <p class="text-lg leading-relaxed mb-6">
+                        This Privacy Policy describes how <span class="font-semibold text-indigo-600">YourStore</span> collects, uses, and discloses your Personal Information when you visit or make a purchase from the Site.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">1. Collection of Personal Information</h2>
+                    <p class="lg:leading-relaxed mb-4">
+                        When you visit the Site, we collect certain information about your device, your interaction with the Site, and information necessary to process your purchases. We may also collect additional information if you contact us for customer support. In this Privacy Policy, we refer to any information that can uniquely identify an individual (including the information below) as “Personal Information”. See the list below for more information about what Personal Information we collect and why.
+                    </p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Device information</h3>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-1 mb-4">
+                        <li><span class="font-semibold">Examples of Personal Information collected:</span> version of web browser, IP address, time zone, cookie information, what sites or products you view, search terms, and how you interact with the Site.</li>
+                        <li><span class="font-semibold">Purpose of collection:</span> to load the Site accurately for you, and to perform analytics on Site usage to optimize our Site.</li>
+                        <li><span class="font-semibold">Source of collection:</span> Collected automatically when you access our Site using cookies, log files, web beacons, tags, or pixels.</li>
+                    </ul>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Order information</h3>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-1 mb-4">
+                        <li><span class="font-semibold">Purpose of collection:</span> to provide products or services to you to fulfill our contract, to process your payment information, arrange for shipping, and provide you with invoices and/or order confirmations, communicate with you, screen our orders for potential risk or fraud, and when in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.</li>
+                        <li><span class="font-semibold">Source of collection:</span> collected from you.</li>
+                    </ul>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2 mt-6">Customer support information</h3>
+                    <ul class="list-disc list-inside text-lg leading-relaxed space-y-1 mb-6">
+                        <li><span class="font-semibold">Purpose of collection:</span> to provide customer support.</li>
+                        <li><span class="font-semibold">Source of collection:</span> collected from you.</li>
+                    </ul>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">2. Your Rights</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        If you are a resident of the European Economic Area (EEA) or California, you have the right to access the Personal Information we hold about you, to port it to a new service, and to ask that your Personal Information be corrected, updated, or erased. If you would like to exercise this right, please contact us through the contact information below.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">3. Cookies</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        A cookie is a small amount of information that’s downloaded to your computer or device when you visit our Site. We use a number of different cookies, including functional, performance, advertising, and social media or content cookies. Cookies make your browsing experience better by allowing the website to remember your actions and preferences (such as login and region selection). This means you don’t have to re-enter this information each time you return to the site or browse from one page to another. Cookies also provide information about how people use the website, for instance, whether it’s their first time visiting or if they are a frequent visitor.
+                    </p>
+                    <p class="lg:leading-relaxed mb-6">
+                        Most browsers automatically accept cookies, but you can choose whether or not to accept cookies through your browser controls, often found in your browser’s “Tools” or “Preferences” menu. For more information on how to control cookies or how to disable them, visit www.allaboutcookies.org.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">4. Changes to This Privacy Policy</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        We may update this Privacy Policy from time to time in order to reflect, for example, changes to our practices or for other operational, legal, or regulatory reasons.
+                    </p>
+
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4 mt-8">5. Contact</h2>
+                    <p class="lg:leading-relaxed mb-6">
+                        For more information about our privacy practices, if you have questions, or if you would like to make a complaint, please contact us by e-mail at <a href="mailto:support@yourstore.com" class="text-indigo-600 hover:underline">support@yourstore.com</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ✅ Footer (Visible Only on Desktop) -->
+{% include 'user_footer.html' %}
+
+    <script>
+        // JavaScript for mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
